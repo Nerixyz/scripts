@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "(ctest) Launch",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${cmake.testProgram}",
+      "args": ["${cmake.testArgs}"],
+      "stopAtEntry": false,
+      "cwd": "${command:cmake.getLaunchTargetDirectory}"
+    }
+  ]
+}

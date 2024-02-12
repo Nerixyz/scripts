@@ -1,0 +1,93 @@
+site_name: Scripts
+site_author: Nerixyz
+site_description: Various scripts and snippets I use
+site_url: https://nerixyz.de/scripts
+
+repo_url: https://github.com/Nerixyz/scripts
+repo_name: Nerixyz/scripts
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - content.action.edit
+    - content.code.annotate
+    - content.code.copy
+    - content.tooltips
+    - navigation.footer
+    - navigation.instant
+    - navigation.tracking # anchor tracking in the URL
+    - navigation.sections
+    - navigation.indexes
+    - search.suggest
+    - search.share
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/file-edit-outline
+    view: material/eye
+    logo: material/script
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+      primary: deep purple
+      accent: deep purple
+
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+      primary: deep purple
+      accent: deep purple
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+      primary: deep purple
+      accent: deep purple
+
+plugins:
+  - git-revision-date-localized:
+      enable_creation_date: true
+      fallback_to_build_date: true
+  - privacy
+  - search
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path:
+        - scripts
+  - pymdownx.superfences
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Nerixyz
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/Nerixyz
+    - icon: fontawesome/brands/twitch
+      link: https://twitch.tv/nerixyz
+    - icon: fontawesome/brands/instagram
+      link: https://instagram.com/nerixyz
+    - icon: fontawesome/brands/discord
+      link: "discord://user?id=143029025361756160"
+      name: "@nerixyz"
+  homepage: https://nerixyz.de

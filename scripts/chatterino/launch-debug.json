@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch CMake Target",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${command:cmake.launchTargetPath}",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${command:cmake.getLaunchTargetDirectory}",
+      "visualizerFile": "${workspaceFolder}/qt6.natvis",
+      "environment": [
+        {
+          "name": "QT_LOGGING_RULES",
+          "value": "chatterino.*.debug=true;qt.widgets.gestures.debug=false;qt.qpa.fonts.debug=false;qt.qpa.window.debug=false;qt.qpa.uiautomation.debug=false;qt.text.*.debug=false;qt.pointer.velocity.debug=false;chatterino.http.debug=false;chatterino.hotkeys.debug=false"
+        },
+        {
+          "name": "QT_SCALE_FACTOR",
+          "value": "1"
+        }
+      ],
+      "symbolOptions": {
+        "searchPaths": [
+          "G:\\QT\\6.5.0\\msvc2019_64\\bin",
+          "G:\\QT\\6.5.0\\msvc2019_64\\plugins\\platforms"
+        ],
+        "searchMicrosoftSymbolServer": false,
+        "cachePath": "D:\\VSSymbolCache"
+      },
+      "sourceFileMap": {
+        "C:\\Users\\qt\\work\\qt\\qtbase": "G:\\Dev\\qt-source"
+      }
+    }
+  ]
+}
