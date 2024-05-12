@@ -53,9 +53,18 @@ ninja -j6 chatterino-crash-handler; # might be built by default
 RequireOk;
 
 if (-not $NoInstall) {
+    $running = Get-Process -Name "chatterino" -ErrorAction Continue;
+    if ($running) {
+        Stop-Process $running.Id;
+    }
+
     cmake --install . --prefix "$InstallDir";
     RequireOk;
     Copy-Item -Force bin/chatterino.pdb "$InstallDir\.";
+
+    if ($running) {
+        Start-Process "$InstallDir\chatterino.exe";
+    }
 }
 
 Pop-Location;
