@@ -4,7 +4,7 @@ icon: material/bug-play-outline
 
 # Launch Debug Instance
 
-This is a `launch.json` for VS Code on Windows to launch a debug instance of [Chatterino](<(https://chatterino.com)>) with appropriate logging, source-maps, and debug info for Qt.
+This is a `launch.json` for VS Code on Windows to launch a debug instance of [Chatterino](https://chatterino.com) with appropriate logging, source-maps, and debug info for Qt.
 
 Qt is expected to be installed at `G:\QT` in version `6.5.0`. The builds are expected to be the official ones. Cache files for debug info are placed in `D:\VSSymbolCache`. A cloned [qtbase](https://github.com/qt/qtbase/) (from the appropriate branch) is expected at `G:\Dev\qt-source`.
 
