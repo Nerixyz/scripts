@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+    <Type Name="QJsonDocument">
+        <DisplayString Condition="!d._Mypair._Myval2">empty</DisplayString>
+        <Expand>
+            <ExpandedItem Condition="d._Mypair._Myval2">
+                ((Qt6Cored.dll!QJsonDocumentPrivate*)(d._Mypair._Myval2))-&gt;value</ExpandedItem>
+        </Expand>
+    </Type>
+
+    <Type Name="QJsonValue">
+        <Intrinsic Name="cbor" Expression="(Qt6Cored.dll!QCborContainerPrivate*)d.d"></Intrinsic>
+        <DisplayString Condition="t == QCborValue::Null">null</DisplayString>
+        <DisplayString Condition="t == QCborValue::Undefined">undefined</DisplayString>
+        <DisplayString Condition="t == QCborValue::False">false</DisplayString>
+        <DisplayString Condition="t == QCborValue::True">true</DisplayString>
+        <DisplayString Condition="t == QCborValue::Integer">{n}</DisplayString>
+        <DisplayString Condition="t == QCborValue::Double">{*(double*)&amp;n}</DisplayString>
+        <DisplayString Condition="t == QCborValue::String">
+            {cbor()-&gt;byteDataAt(n)-&gt;str(),[cbor()-&gt;byteDataAt(n)-&gt;len]s8}</DisplayString>
+        <Expand>
+            <Item Name="array" Condition="t == QCborValue::Array">cbor(),view(arr)</Item>
+            <Item Name="object" Condition="t == QCborValue::Map">cbor(),view(map)</Item>
+        </Expand>
+    </Type>
+
+    <Type Name="QJsonArray">
+        <Intrinsic Name="cbor" Expression="(Qt6Cored.dll!QCborContainerPrivate*)a.d"></Intrinsic>
+        <Expand>
+            <ExpandedItem>cbor(),view(arr)</ExpandedItem>
+        </Expand>
+    </Type>
+
+    <Type Name="QJsonObject">
+        <Intrinsic Name="cbor" Expression="(Qt6Cored.dll!QCborContainerPrivate*)o.d"></Intrinsic>
+        <DisplayString Condition="!cbor()">empty</DisplayString>
+        <Expand>
+            <ExpandedItem
+                Condition="cbor()">cbor(),view(map)</ExpandedItem>
+        </Expand>
+    </Type>
+
+    <Type Name="QCborValue">
+        <DisplayString Condition="t == QCborValue::Null">null</DisplayString>
+        <DisplayString Condition="t == QCborValue::Undefined">undefined</DisplayString>
+        <DisplayString Condition="t == QCborValue::False">false</DisplayString>
+        <DisplayString Condition="t == QCborValue::True">true</DisplayString>
+        <DisplayString Condition="t == QCborValue::Integer">{n}</DisplayString>
+        <DisplayString Condition="t == QCborValue::Double">{*(double*)&amp;n}</DisplayString>
+        <DisplayString Condition="t == QCborValue::String">
+            {container-&gt;byteDataAt(n)-&gt;str(),[container-&gt;byteDataAt(n)-&gt;len]s8}</DisplayString>
+        <Expand>
+            <Item Name="array" Condition="t == QCborValue::Array">container,na</Item>
+            <Item Name="object" Condition="t == QCborValue::Map">container,view(map)na</Item>
+        </Expand>
+    </Type>
+
+    <Type Name="QCborContainerPrivate">
+        <Intrinsic
+            Name="tt" Expression="(Qt6Cored.dll!QCborContainerPrivate*)this" />
+        <Intrinsic
+            Name="el" Expression="tt()-&gt;elements.d.ptr[n]">
+            <Parameter Name="n" Type="long long" />
+        </Intrinsic>
+        <Intrinsic
+            Name="byteDataAt"
+            Expression="((Qt6Cored.dll!QtCbor::ByteData*)(tt()-&gt;data.d.ptr + el(n).value))"
+        >
+            <Parameter Name="n" Type="long long" />
+        </Intrinsic>
+
+        <Expand>
+            <CustomListItems
+                Condition="tt()-&gt;elements.d.size &gt; 0" IncludeView="arr">
+                <Variable Name="i" InitialValue="0" />
+                <Loop Condition="i &lt; tt()-&gt;elements.d.size">
+                    <If
+                        Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::HasByteData">
+                        <If
+                            Condition="el(i).type == QCborValue::Type::String">
+                            <Item Name="[{i}]">byteDataAt(i)-&gt;str(),[byteDataAt(i)-&gt;len]s8</Item>
+                        </If>
+                        <Else>
+                            <Item Name="[{i}]">el(i)</Item>
+                        </Else>
+                    </If>
+                    <Elseif
+                        Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::IsContainer">
+                        <If Condition="el(i).type == QCborValue::Type::Array">
+                            <Item Name="[{i}]">el(i).container,view(arr)na</Item>
+                        </If>
+                        <Else>
+                            <Item Name="[{i}]">el(i).container,view(map)na</Item>
+                        </Else>
+                    </Elseif>
+                    <Else>
+                        <Item Name="[{i}]">el(i)</Item>
+                    </Else>
+                    <Exec>++i</Exec>
+                </Loop>
+            </CustomListItems>
+            <CustomListItems
+                Condition="tt()-&gt;elements.d.size &gt; 0" IncludeView="map">
+                <Variable Name="key" InitialValue="(const char *)0" />
+                <Variable Name="len" InitialValue="0" />
+                <Variable Name="i" InitialValue="0" />
+                <Loop Condition="i &lt; tt()-&gt;elements.d.size">
+                    <If Condition="(i&amp;1) == 0">
+                        <Exec>key = byteDataAt(i)-&gt;str()</Exec>
+                        <Exec>len = byteDataAt(i)-&gt;len</Exec>
+                    </If>
+                    <Else>
+                        <If
+                            Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::HasByteData">
+                            <If
+                                Condition="el(i).type == QCborValue::Type::String">
+                                <Item
+                                    Name="[{key,[len]na}]">
+                                    byteDataAt(i)-&gt;str(),[byteDataAt(i)-&gt;len]s8</Item>
+                            </If>
+                            <Else>
+                                <Item Name="[{key,[len]na}]">el(i)</Item>
+                            </Else>
+                        </If>
+                        <Elseif
+                            Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::IsContainer">
+                            <If
+                                Condition="el(i).type == QCborValue::Type::Array">
+                                <Item
+                                    Name="[{key,[len]na}]">el(i).container,view(arr)na</Item>
+                            </If>
+                            <Else>
+                                <Item Name="[{key,[len]na}]">
+                                    el(i).container,view(map)na</Item>
+                            </Else>
+
+                        </Elseif>
+                        <Else>
+                            <Item Name="[{key,[len]na}]">el(i)</Item>
+                        </Else>
+                    </Else>
+                    <Exec>++i</Exec>
+                </Loop>
+            </CustomListItems>
+        </Expand>
+    </Type>
+
+    <Type Name="QtCbor::ByteData">
+        <Intrinsic Name="str" Expression="(const char *)(this + 1)" ModuleName="Qt6Cored.dll"></Intrinsic>
+    </Type>
+
+    <Type Name="QtCbor::Element">
+        <DisplayString Condition="type == QCborValue::Null">null</DisplayString>
+        <DisplayString Condition="type == QCborValue::Undefined">undefined</DisplayString>
+        <DisplayString Condition="type == QCborValue::False">false</DisplayString>
+        <DisplayString Condition="type == QCborValue::True">true</DisplayString>
+        <DisplayString Condition="type == QCborValue::Integer">{value}</DisplayString>
+        <DisplayString Condition="type == QCborValue::Double">{*(double*)&amp;value}</DisplayString>
+        <DisplayString
+            Condition="type == QCborValue::Type::Array &amp;&amp; container == nullptr">[]</DisplayString>
+        <DisplayString Condition="type == QCborValue::Type::Map">{{}}</DisplayString>
+    </Type>
+</AutoVisualizer>
