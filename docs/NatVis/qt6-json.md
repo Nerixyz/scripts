@@ -14,7 +14,7 @@ icon: material/bug-outline
 
 Iterators (possibly `const`) and `QJson{Array,Object}(Const)Ref` (potentially in 6.9) are automatically visualized as they wrap types with existing visualizers.
 
-The visualizers are based on [`QJson.natvis`](https://github.com/aleksey-nikolaev/natvis-collection/blob/bd39c080d1984cc331b231845e7755f31411f7fd/QJson.natvis) from Aleksey Nikolaev. They were extended to support both UTF-16 and UTF-8 (+ASCII) strings. Additionally, there's basic support for CBOR types (`QCborValue` etc.).
+The visualizers are based on [`QJson.natvis`](https://github.com/aleksey-nikolaev/natvis-collection/blob/bd39c080d1984cc331b231845e7755f31411f7fd/QJson.natvis) for Qt 5 from Aleksey Nikolaev. They were extended to support both UTF-16 and UTF-8 (+ASCII) strings. Additionally, there's basic support for CBOR types (`QCborValue` etc.).
 
 To add the visualizers to Visual Studio, follow the [documentation](https://learn.microsoft.com/en-us/visualstudio/debugger/create-custom-views-of-native-objects#BKMK_natvis_location).
 In VS Code, use [`visualizerFile`](https://code.visualstudio.com/docs/cpp/launch-json-reference#_visualizerfile). Note that [only one file is supported right now](https://github.com/microsoft/vscode-cpptools/issues/10917), so you might have to merge this with other visualizers.
