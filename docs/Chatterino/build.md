@@ -14,12 +14,12 @@ It builds from the current branch but makes sure it's up-to-date.
 - Crashpad is enabled
 - Debug info is generated (and installed)
 
-Qt is assumed to be installed by the Qt Maintenance Tool (`msvc2019_64` is expected in the Qt directory).
+Qt is assumed to be installed by the Qt Maintenance Tool (`msvc2022_64` is expected in the Qt directory - requires 6.8 or later).
 
 The following parameters can be specified:
 
-- `-QtVersion <version>` Specifies the version of Qt to use (default: 6.5.0)
-- `-QtPath <path>` Specifies the path to Qt (default: G:\Qt)
+- `-QtVersion <version>` Specifies the version of Qt to use (default: 6.8.0)
+- `-QtPath <path>` Specifies the path to Qt (default: G:\QT)
 - `-InstallDir <dir>` Specifies the directory to install the build in (default: D:\Chatterino7)
 - `-NoInstall` If specified, skips the installation/deployment
 

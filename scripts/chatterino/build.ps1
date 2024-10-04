@@ -1,8 +1,9 @@
 param (
-    [string] $QtVersion = "6.7.1",
+    [string] $QtVersion = "6.8.0",
     [string] $QtPath = "G:\QT",
     [string] $InstallDir = "D:\Chatterino7",
-    [switch] $NoInstall
+    [switch] $NoInstall,
+    [switch] $NoClean
 )
 
 $ErrorActionPreference = "Stop";
@@ -24,8 +25,10 @@ RequireOk;
 git submodule update --init --recursive;
 RequireOk;
 
-Remove-Item -Recurse -Force build;
-mkdir build;
+if (-not $NoClean) {
+    Remove-Item -Recurse -Force build;
+    mkdir build;
+}
 Push-Location build;
 
 conan install .. `
@@ -38,7 +41,7 @@ RequireOk;
 cmake .. `
     -G Ninja `
     -DCMAKE_BUILD_TYPE=RelWithDebInfo `
-    -DCMAKE_PREFIX_PATH="$QtPath\$QtVersion\msvc2019_64" `
+    -DCMAKE_PREFIX_PATH="$QtPath\$QtVersion\msvc2022_64" `
     -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" `
     -DBUILD_WITH_CRASHPAD=On `
     -DCHATTERINO_PLUGINS=On `
@@ -49,16 +52,19 @@ RequireOk;
 ninja -j6;
 RequireOk;
 
-ninja -j6 chatterino-crash-handler; # might be built by default
-RequireOk;
-
 if (-not $NoInstall) {
-    $running = Get-Process -Name "chatterino" -ErrorAction Continue;
+    $running = Get-Process -Name "chatterino" -ErrorAction SilentlyContinue;
     if ($running) {
         Stop-Process $running.Id;
     }
 
-    cmake --install . --prefix "$InstallDir";
+    # XXX: wait for chatterino to be fully closed
+    for ($i = 0; $i -lt 5; $i++) {
+        cmake --install . --prefix "$InstallDir";
+        if ($?) {
+            break;
+        }
+    }
     RequireOk;
     Copy-Item -Force bin/chatterino.pdb "$InstallDir\.";
 
