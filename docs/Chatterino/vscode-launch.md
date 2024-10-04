@@ -14,7 +14,7 @@ Qt is expected to be installed at `G:\QT` in version `6.8.0`. The builds are exp
 (iwr "https://github.com/qt-labs/vstools/raw/dev/QtVsTools.Package/qt6.natvis.xml").Content.Replace('##NAMESPACE##::', '') | Out-File qt6.natvis
 ```
 
-For VS Code, you'll need to merge the [JSON NatVis](../Natvis/qt6-json.md) manually (some day, I'll automate that).
+For VS Code, you'll need to merge the [JSON NatVis](../NatVis/qt6-json.md) manually (some day, I'll automate that).
 
 ```json linenums="1" title="chatterino/launch-debug.json"
 --8<-- "chatterino/launch-debug.json"
