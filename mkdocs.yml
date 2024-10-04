@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 site_name: Scripts
 site_author: Nerixyz
 site_description: Various scripts and snippets I use
@@ -6,6 +7,9 @@ site_url: https://nerixyz.de/scripts
 repo_url: https://github.com/Nerixyz/scripts
 repo_name: Nerixyz/scripts
 edit_uri: edit/main/docs/
+
+extra_css:
+  - assets/styles.css
 
 theme:
   name: material
