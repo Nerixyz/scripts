@@ -1,5 +1,5 @@
 param (
-    [string] $QtVersion = "6.8.0",
+    [string] $QtVersion = "6.8.1",
     [string] $QtPath = "G:\QT",
     [string] $InstallDir = "D:\Chatterino7",
     [switch] $NoInstall,
