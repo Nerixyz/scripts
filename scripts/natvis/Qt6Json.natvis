@@ -28,7 +28,7 @@
     <DisplayString Condition="!cbor()">empty</DisplayString>
     <Expand>
       <ExpandedItem
-          Condition="cbor()">cbor(),view(map)</ExpandedItem>
+        Condition="cbor()">cbor(),view(map)</ExpandedItem>
     </Expand>
   </Type>
 
@@ -37,7 +37,7 @@
     <DisplayString Condition="!cbor()">empty</DisplayString>
     <Expand>
       <ExpandedItem
-          Condition="cbor()">cbor(),view(map)</ExpandedItem>
+        Condition="cbor()">cbor(),view(map)</ExpandedItem>
     </Expand>
   </Type>
 
@@ -98,6 +98,10 @@
       <Parameter Name="n" Type="long long" />
     </Intrinsic>
     <Intrinsic
+        Name="flag" Expression="*((int*)&amp;self()-&gt;elements.d.ptr[n].flags)">
+      <Parameter Name="n" Type="long long" />
+    </Intrinsic>
+    <Intrinsic
         Name="byteDataAt"
         Expression="((Qt6Cored.dll!QtCbor::ByteData*)(self()-&gt;data.d.ptr + el(n).value))">
       <Parameter Name="n" Type="long long" />
@@ -108,9 +112,9 @@
       <CustomListItems Condition="self()-&gt;elements.d.size &gt; 0" IncludeView="arr">
         <Variable Name="i" InitialValue="0" />
         <Loop Condition="i &lt; self()-&gt;elements.d.size">
-          <If Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::HasByteData">
+          <If Condition="flag(i) &amp; Qt6Cored.dll!QtCbor::Element::HasByteData">
             <If Condition="el(i).type == QCborValue::Type::String">
-              <If Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16">
+              <If Condition="flag(i) &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16">
                 <Item Name="[{i}]">byteDataAt(i)-&gt;u16(),[byteDataAt(i)-&gt;len/2]su</Item>
               </If>
               <Else>
@@ -121,7 +125,7 @@
               <Item Name="[{i}]">byteDataAt(i)-&gt;bytes(),[byteDataAt(i)-&gt;len]hv</Item>
             </Else>
           </If>
-          <Elseif Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::IsContainer">
+          <Elseif Condition="flag(i) &amp; Qt6Cored.dll!QtCbor::Element::IsContainer">
             <If Condition="el(i).type == QCborValue::Type::Array">
               <Item Name="[{i}]">el(i).container,view(arr)na</Item>
             </If>
@@ -148,7 +152,7 @@
         <Loop Condition="i &lt; self()-&gt;elements.d.size">
           <If Condition="(i&amp;1) == 0">
             <!-- even elements are keys -->
-            <If Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16">
+            <If Condition="flag(i) &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16">
               <!-- utf16 key -->
               <Exec>key8 = nullptr</Exec>
               <Exec>key16 = byteDataAt(i)-&gt;u16()</Exec>
@@ -172,9 +176,9 @@
           </If>
           <Else>
             <!-- odd elements are values -->
-            <If Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::HasByteData">
+            <If Condition="flag(i) &amp; Qt6Cored.dll!QtCbor::Element::HasByteData">
               <If Condition="el(i).type == QCborValue::Type::String">
-                <If Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16">
+                <If Condition="flag(i) &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16">
                   <!-- utf16 strings -->
                   <If Condition="key16">
                     <Item Name="[{key16,[len]su}]">byteDataAt(i)-&gt;u16(),[byteDataAt(i)-&gt;len/2]su</Item>
@@ -212,7 +216,7 @@
                 </Else>
               </Else>
             </If>
-            <Elseif Condition="el(i).flags.i &amp; Qt6Cored.dll!QtCbor::Element::IsContainer">
+            <Elseif Condition="flag(i) &amp; Qt6Cored.dll!QtCbor::Element::IsContainer">
               <If Condition="el(i).type == QCborValue::Type::Array">
                 <!-- arrays -->
                 <If Condition="key16">
@@ -255,10 +259,10 @@
         </Loop>
       </CustomListItems>
 
-      <ExpandedItem IncludeView="stringAtOne" Condition="el(1).flags.i &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16">
+      <ExpandedItem IncludeView="stringAtOne" Condition="flag(1) &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16">
         byteDataAt(1)-&gt;u16(),[byteDataAt(1)-&gt;len/2]su
       </ExpandedItem>
-      <ExpandedItem IncludeView="stringAtOne" Condition="!(el(1).flags.i &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16)">
+      <ExpandedItem IncludeView="stringAtOne" Condition="!(flag(1) &amp; Qt6Cored.dll!QtCbor::Element::StringIsUtf16)">
         byteDataAt(1)-&gt;str(),[byteDataAt(1)-&gt;len]s8
       </ExpandedItem>
       <ExpandedItem IncludeView="bytesAtOne">
