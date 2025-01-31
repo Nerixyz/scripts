@@ -10,21 +10,21 @@
   </Type>
 
   <Type Name="QJsonArray">
-    <Intrinsic Name="cbor" Expression="(Qt6Cored.dll!QCborContainerPrivate*)a.d"></Intrinsic>
+    <Intrinsic Name="cbor" Expression="*(Qt6Cored.dll!QCborContainerPrivate**)&amp;a"></Intrinsic>
     <Expand>
       <ExpandedItem>cbor(),view(arr)</ExpandedItem>
     </Expand>
   </Type>
 
   <Type Name="QCborArray">
-    <Intrinsic Name="cbor" Expression="(Qt6Cored.dll!QCborContainerPrivate*)d.d"></Intrinsic>
+    <Intrinsic Name="cbor" Expression="*(Qt6Cored.dll!QCborContainerPrivate**)&amp;d"></Intrinsic>
     <Expand>
       <ExpandedItem>cbor(),view(arr)</ExpandedItem>
     </Expand>
   </Type>
 
   <Type Name="QJsonObject">
-    <Intrinsic Name="cbor" Expression="(Qt6Cored.dll!QCborContainerPrivate*)o.d"></Intrinsic>
+    <Intrinsic Name="cbor" Expression="*(Qt6Cored.dll!QCborContainerPrivate**)&amp;o"></Intrinsic>
     <DisplayString Condition="!cbor()">empty</DisplayString>
     <Expand>
       <ExpandedItem
@@ -33,7 +33,7 @@
   </Type>
 
   <Type Name="QCborMap">
-    <Intrinsic Name="cbor" Expression="(Qt6Cored.dll!QCborContainerPrivate*)d.d"></Intrinsic>
+    <Intrinsic Name="cbor" Expression="*(Qt6Cored.dll!QCborContainerPrivate**)&amp;d"></Intrinsic>
     <DisplayString Condition="!cbor()">empty</DisplayString>
     <Expand>
       <ExpandedItem
