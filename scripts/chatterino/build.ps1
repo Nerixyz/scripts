@@ -41,15 +41,19 @@ RequireOk;
 cmake .. `
     -G Ninja `
     -DCMAKE_BUILD_TYPE=RelWithDebInfo `
+    -DCMAKE_C_COMPILER=clang-cl `
+    -DCMAKE_CXX_COMPILER=clang-cl `
+    -DCMAKE_COLOR_DIAGNOSTICS=On `
     -DCMAKE_PREFIX_PATH="$QtPath\$QtVersion\msvc2022_64" `
     -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" `
     -DBUILD_WITH_CRASHPAD=On `
     -DCHATTERINO_PLUGINS=On `
     -DUSE_PRECOMPILED_HEADERS=On `
+    -DCHATTERINO_USE_GDI_FONTENGINE=Off `
     -DCHATTERINO_LTO=On;
 RequireOk;
 
-ninja -j6;
+ninja;
 RequireOk;
 
 if (-not $NoInstall) {
