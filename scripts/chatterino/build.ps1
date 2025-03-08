@@ -43,7 +43,8 @@ cmake .. `
     -DCMAKE_BUILD_TYPE=RelWithDebInfo `
     -DCMAKE_C_COMPILER=clang-cl `
     -DCMAKE_CXX_COMPILER=clang-cl `
-    -DCMAKE_COLOR_DIAGNOSTICS=On `
+    -DCMAKE_C_FLAGS="-fansi-escape-codes -fcolor-diagnostics" `
+    -DCMAKE_CXX_FLAGS="-fansi-escape-codes -fcolor-diagnostics" `
     -DCMAKE_PREFIX_PATH="$QtPath\$QtVersion\msvc2022_64" `
     -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" `
     -DBUILD_WITH_CRASHPAD=On `
