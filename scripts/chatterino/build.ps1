@@ -1,5 +1,5 @@
 param (
-    [string] $QtVersion = "6.9.0",
+    [string] $QtVersion = "6.10.0",
     [string] $QtPath = "F:\Qt",
     [string] $InstallDir = "F:\Chatterino7",
     [switch] $NoInstall,
@@ -43,8 +43,8 @@ cmake .. `
     -DCMAKE_BUILD_TYPE=RelWithDebInfo `
     -DCMAKE_C_COMPILER=clang-cl `
     -DCMAKE_CXX_COMPILER=clang-cl `
-    -DCMAKE_C_FLAGS="-fansi-escape-codes -fcolor-diagnostics" `
-    -DCMAKE_CXX_FLAGS="-fansi-escape-codes -fcolor-diagnostics" `
+    -DCMAKE_C_FLAGS="-fansi-escape-codes -fcolor-diagnostics -D_MSVC_STL_HARDENING=1" `
+    -DCMAKE_CXX_FLAGS="-fansi-escape-codes -fcolor-diagnostics -D_MSVC_STL_HARDENING=1" `
     -DCMAKE_PREFIX_PATH="$QtPath\$QtVersion\msvc2022_64" `
     -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" `
     -DBUILD_WITH_CRASHPAD=On `
