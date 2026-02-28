@@ -1,5 +1,5 @@
 param (
-    [string] $QtVersion = "6.10.0",
+    [string] $QtVersion = "6.11.0",
     [string] $QtPath = "F:\Qt",
     [string] $InstallDir = "F:\Chatterino7",
     [switch] $NoInstall,
@@ -41,8 +41,8 @@ RequireOk;
 cmake .. `
     -G Ninja `
     -DCMAKE_BUILD_TYPE=RelWithDebInfo `
-    -DCMAKE_C_COMPILER=clang-cl `
-    -DCMAKE_CXX_COMPILER=clang-cl `
+    -DCMAKE_C_COMPILER="C:\Users\johannes\scoop\apps\llvm-full\current\bin\clang-cl.EXE" `
+    -DCMAKE_CXX_COMPILER="C:\Users\johannes\scoop\apps\llvm-full\current\bin\clang-cl.EXE" `
     -DCMAKE_C_FLAGS="-fansi-escape-codes -fcolor-diagnostics -D_MSVC_STL_HARDENING=1" `
     -DCMAKE_CXX_FLAGS="-fansi-escape-codes -fcolor-diagnostics -D_MSVC_STL_HARDENING=1" `
     -DCMAKE_PREFIX_PATH="$QtPath\$QtVersion\msvc2022_64" `
@@ -51,7 +51,9 @@ cmake .. `
     -DCHATTERINO_PLUGINS=On `
     -DUSE_PRECOMPILED_HEADERS=On `
     -DCHATTERINO_USE_GDI_FONTENGINE=Off `
-    -DCHATTERINO_LTO=On;
+    -DCHATTERINO_SPELLCHECK=On `
+    -DCHATTERINO_LTO=On `
+    -DCHATTERINO_FORCE_LTO=On;
 RequireOk;
 
 ninja;
